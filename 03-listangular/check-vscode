@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if ! grep "this.dataSource=this.http.get(environment.API_URL+'/list');" /opt/intersystems/angular/src/app/bookmark-list/bookmark-list.component.ts  ; then
+  fail-message "Did you add the call to the API?"
+  exit 1
+fi

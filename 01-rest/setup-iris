@@ -1,0 +1,119 @@
+#!/bin/bash
+
+cat <<'EOF' > /tmp/Instruqt.Check.cls
+Class %zInstruqt.Check
+{
+
+ClassMethod AddError(ByRef errors = 0, failureMsg As %String)
+{
+  set errors($Increment(errors)) = failureMsg
+}
+
+ClassMethod Failure(ByRef errors = 0, halt As %Boolean = 1)
+{
+  if $data(errors)=1,errors'=0 {
+    set failureMsg = errors, errors = 0
+    do ..AddError(.errors, failureMsg)
+  }
+  for i=1:1:errors {
+    Write "FAIL: ", errors(i),!
+  }
+  if halt {
+    set exit = errors > 0
+    do ##class(%SYSTEM.Process).Terminate(,exit)
+  }
+}
+
+ClassMethod CheckSQLPrepare(sql, failureMsg As %String, ByRef errors)
+{
+  Set tSC = ##class(%SQL.Statement).%New().%Prepare(sql)
+  If $$$ISERR(tSC) {
+    do ..AddError(.errors, failureMsg)
+  }
+}
+
+ClassMethod CheckSQLExec(sql, failureMsg As %String, ByRef errors)
+{
+  Set tRes = ##class(%SQL.Statement).%ExecDirect(,sql)
+  If tRes.%SQLCODE'=0 {
+    do ..AddError(.errors, failureMsg)
+  }
+}
+
+ClassMethod CachedQuery(scheme, table, sql, failureMsg, ByRef errors)
+{
+  set tRs = ##class(%SQL.Manager.Catalog).CachedQueryTableFunc(scheme, table)
+  while tRs.%Next() { set query = $Piece($zstrip(tRs.Query_"/*#", "<WC"),"/*#") Set tQueries(query) = "" }
+  zwrite tQueries
+  if '$Data(tQueries(sql)) {
+    do ..AddError(.errors, failureMsg)
+  }
+}
+
+ClassMethod DBChange(db, ByRef readOnly)
+{
+  new $namespace
+  set $namespace = "%SYS"
+  set db = ##class(SYS.Database).%OpenId($zu(12,db))
+  set readOnly = db.ReadOnly
+  Set db.ReadOnly = 0
+  Quit db.%Save()
+}
+
+ClassMethod DBRestore(db, ByRef readOnly)
+{
+  new $namespace
+  set $namespace = "%SYS"
+  set db = ##class(SYS.Database).%OpenId($zu(12,db))
+  set db.ReadOnly = readOnly
+  Quit db.%Save()
+}
+
+ClassMethod ApplyPatches()
+{
+
+}
+
+}
+EOF
+
+# only one terminal session at once allow
+cat <<'EOF' > /tmp/zstart.mac
+ROUTINE %ZSTART
+#include %syPidtab
+LOGIN
+  Set pids = ""
+  &sql(SELECT %DLIST(id) INTO :pids FROM %SYS.ProcessQuery WHERE Routine = 'shell')
+  If SQLCODE=0 {
+    For i=1:1:$Listlength(pids) {
+      Set pid = $Listget(pids, i)
+      Continue:pid=$Job
+      Do $System.Process.Terminate(pid, 1)
+    }
+  }
+  Quit
+EOF
+
+su - irisowner <<EOSU
+/usr/irissys/dev/Cloud/ICM/waitISC.sh
+cat <<'EOF' | iris session iris -U%SYS
+do ##class(Security.Users).UnExpireUserPasswords("*")
+do ##class(Security.Users).Create("tech","%ALL","demo")
+do ##class(Security.Users).AddRoles("UnknownUser","%ALL")
+set rs= ##class(Security.Applications).ListFunc("/csp/*")
+set p("AutheEnabled")=64, p("UseCookies") = 1
+while rs.%Next() { do ##class(Security.Applications).Modify(rs.Name,.p) } kill rs
+do ##class(%SYSTEM.OBJ).Load("/tmp/Instruqt.Check.cls","ck")
+do ##class(%SYSTEM.OBJ).Load("/tmp/zstart.mac","ck")
+do ##class(Security.SSLConfigs).Create("https")
+set pa("NameSpace") = "USER"
+set pa("AutheEnabled") = 64
+set pa("MatchRoles") = ":%All"
+set pa("DispatchClass") = "Sample.RestService"
+set pa("Recurse") = 1
+do ##class(Security.Applications).Create("/bookmarks", .pa)
+zn "user"
+do ##class(%zInstruqt.Check).ApplyPatches()
+halt
+EOF
+EOSU

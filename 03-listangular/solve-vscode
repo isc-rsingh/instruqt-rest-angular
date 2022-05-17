@@ -1,0 +1,6 @@
+#!/bin/bash
+
+su - coder <<EOSU
+cd /opt/intersystems/
+git checkout -f step3
+EOSU

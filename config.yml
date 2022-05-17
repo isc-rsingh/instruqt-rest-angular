@@ -1,0 +1,17 @@
+version: "3"
+containers:
+- name: iris
+  image: intersystemsdc/iris-community
+  entrypoint: /tini -- su - irisowner -c /iris-main
+  shell: su - irisowner -c 'iris session iris'
+  ports:
+  - 52773
+  - 1972
+  memory: 1024
+- name: vscode
+  image: caretdev/code-server
+  cmd: --auth none --disable-telemetry --port=8080
+  shell: sudo -u coder -s /bin/bash
+  ports:
+  - 8080
+  memory: 1024

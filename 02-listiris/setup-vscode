@@ -1,0 +1,162 @@
+#!/bin/bash
+
+set -x
+
+mkdir /home/coder/.ssh
+cat <<EOF > /home/coder/.ssh/instruqt
+-----BEGIN OPENSSH PRIVATE KEY-----
+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
+-----END OPENSSH PRIVATE KEY-----
+EOF
+
+chmod 0400 /home/coder/.ssh/instruqt
+
+cat <<EOF > /home/coder/.ssh/config
+Host github.com
+        Hostname github.com
+        IdentityFile=/home/coder/.ssh/instruqt
+EOF
+
+chown -R coder:coder /home/coder
+
+mkdir -p /opt/intersystems/
+
+chown -R coder:coder /opt/intersystems/
+su - coder <<EOSU
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+git clone -b step1 git@github.com:caretdev/instruqt-rest-angular.git /opt/intersystems/
+EOSU
+
+echo 'su - coder -s /bin/bash "$@"' > /bin/coder
+chmod +x /bin/coder
+
+set-workdir /opt/intersystems/
+echo 'cd /opt/intersystems/' >> /home/coder/.bashrc
+
+cat <<EOF > ~/.local/share/code-server/User/settings.json
+{
+  "workbench.startupEditor": "none",
+  "intersystems.language-server.suggestTheme": false,
+  "objectscript.ignoreInstallLanguageServer": true,
+  "objectscript.ignoreInstallServerManager": true,
+  "terminal.integrated.shell.linux": "/bin/coder",
+  "python.showStartPage": false,
+  "python.linting.enabled": false,
+  "objectscript.conn": {
+    "active": true,
+    "host": "iris",
+    "port": 52773,
+    "ns": "USER",
+    "username": "tech",
+    "password": "demo"
+  },
+  "sqltools.autoConnectTo": ["IRIS"],
+  "sqltools.autoOpenSessionFiles": true,
+  "sqltools.connections": [
+    {
+      "namespace": "USER",
+      "connectionMethod": "Server and Port",
+      "showSystem": false,
+      "previewLimit": 50,
+      "server": "iris",
+      "port": 52773,
+      "askForPassword": false,
+      "driver": "InterSystems IRIS",
+      "name": "IRIS",
+      "username": "_SYSTEM",
+      "password": "SYS"
+    }
+  ],
+  "sqltools.useNodeRuntime": true,
+  "files.associations": {
+    "*.config": "plaintext"
+  },
+  "[objectscript-class]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "files.autoSave": "off",
+}
+EOF
+
+cat <<'EOF' >> /bin/iris-import
+#!/bin/bash
+
+path=$1
+doc=$2
+
+url=http://iris:52773/api/atelier/v1/USER
+
+auth=(-u _SYSTEM:SYS)
+args=(-v -H 'Content-Type: application/json' --data-binary @-)
+
+# Put doc
+jq --raw-input --slurp 'split("\n")' $path \
+  | jq '{ enc: false, content: .}' \
+  | curl -X PUT "${auth[@]}" "${args[@]}" $url/doc/$doc?ignoreConflict=1
+
+# Compile
+echo "[\"${doc}\"]" | curl "${auth[@]}" "${args[@]}" $url/action/compile
+
+# Export to file
+curl "${auth[@]}" $url/doc/$doc \
+  | jq '.result.content[]' --raw-output > $path
+
+EOF
+
+chmod +x /bin/iris-import
+
+su - coder <<EOSU
+cd /opt/intersystems/
+git checkout -f step1 
+cd /opt/intersystems/angular
+npm install
+nohup npm run instruqt > ng.out 2> ng.err < /dev/null & disown
+EOSU
+

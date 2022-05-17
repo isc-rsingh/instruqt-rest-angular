@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if ! grep "this.http.post(environment.API_URL+'/add'" /opt/intersystems/angular/src/app/bookmark-form/bookmark-form.component.ts  ; then
+  fail-message "Did you add the call to the API?"
+  exit 1
+fi

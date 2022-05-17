@@ -1,0 +1,16 @@
+#!/bin/bash
+
+su - irisowner <<'EOSU'
+cat <<'EOF' | iris session iris -UUSER
+
+set tClassDef = ##class(%Dictionary.ClassDefinition).%OpenId("Sample.RestService")
+if '$Isobject(tClassDef) { do ##class(%zInstruqt.Check).Failure("Did you save file src/Sample/RestService.cls?") }
+
+do ##class(%zInstruqt.Check).Failure(.errors)
+halt
+EOF
+EOSU
+
+exit=$?
+
+exit $exit

@@ -1,0 +1,24 @@
+slug: rest-angular
+id: pxdntokdxjgg
+type: track
+title: REST + Angular App
+teaser: Building a simple REST service in InterSystems IRIS and linking it to an Angular
+  web application
+description: This tutorial will show you how to build a simple URL bookmarking app
+  using InterSystems IRIS as the database and REST service engine, and the Angular
+  web framework for the client.
+icon: https://cdn.instruqt.com/assets/intersystems/vscode.png
+level: beginner
+tags:
+- iris
+- intersystems
+- angular
+- REST
+owner: intersystems
+developers:
+- ssh@banksiaglobal.com
+- dmitry@caretdev.com
+- raj.singh@intersystems.com
+private: false
+published: false
+checksum: "7088446816139799576"

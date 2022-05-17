@@ -1,0 +1,8 @@
+#!/bin/bash
+
+STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" -d '{}' http://iris:52773/bookmarks/add)
+
+if [ $STATUSCODE -ne 500 ]; then
+  fail-message "Did you add /add route and method for it?"
+  exit 1
+fi

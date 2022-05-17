@@ -1,0 +1,9 @@
+#!/bin/bash
+
+su - irisowner <<EOSU
+cat <<EOF | iris session iris -UUSER
+set tRes = ##class(%SQL.Statement).%ExecDirect(,"CREATE TABLE Sample.Bookmark (Url VARCHAR(1000), Description VARCHAR(1000), DateAdded DATE, TimeAdded TIME )")
+set tRes = ##class(%SQL.Statement).%ExecDirect(,"INSERT INTO Sample.Bookmark (Url, Description, DateAdded, TimeAdded) VALUES ('https://intersystems.com','InterSystems',CURRENT_DATE,CURRENT_TIME)")
+halt
+EOF
+EOSU

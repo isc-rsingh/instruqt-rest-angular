@@ -1,0 +1,17 @@
+#!/bin/bash
+
+su - irisowner <<EOSU
+cat <<EOF | iris session iris -UUSER
+
+set sql = "SELECT Url,Description FROM Sample.Bookmark"
+set msg = "Table Sample.Bookmark does not exist"
+do ##class(%zInstruqt.Check).CheckSQLExec(sql, msg, .errors)
+
+do ##class(%zInstruqt.Check).Failure(.errors)
+halt
+EOF
+EOSU
+
+exit=$?
+
+exit $exit
