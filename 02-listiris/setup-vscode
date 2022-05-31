@@ -81,6 +81,7 @@ echo 'cd /opt/intersystems/' >> /home/coder/.bashrc
 
 cat <<EOF > ~/.local/share/code-server/User/settings.json
 {
+  "editor.minimap.enabled": false,
   "workbench.startupEditor": "none",
   "intersystems.language-server.suggestTheme": false,
   "objectscript.ignoreInstallLanguageServer": true,

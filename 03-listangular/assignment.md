@@ -29,7 +29,7 @@ tabs:
 difficulty: basic
 timelimit: 900
 ---
-On the left in the VSCode tab, expand the `src` folder and all of it's child folders.
+On the left in the VSCode tab, expand the `angular/src/app` folder and all of it's child folders.
 
 Here you see a simple web application with a list provided by the `BookmarkListComponent` Angular class, and a form provided by the `BookmarkFormComponent` Angular class. At the moment all data is coming from the application itself.
 

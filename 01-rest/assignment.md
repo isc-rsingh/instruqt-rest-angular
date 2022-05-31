@@ -8,6 +8,7 @@ notes:
 - type: text
   contents: |-
     In this exercise, you will build a very simple single-page URL bookmarking application.
+    
     It will allow you to save URLs into the database and then retrieve and display them in an attractive list format in a web app.
 - type: text
   contents: |-
