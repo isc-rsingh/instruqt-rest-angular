@@ -1,2 +1,3 @@
 # rest-angular
- Instruqt tutorial for InterSystems IRIS+REST+Angular
+
+Configuration files for the InterSystems IRIS [REST + Angular App tutorial on Instruqt](https://play.instruqt.com/intersystems/tracks/rest-angular).
